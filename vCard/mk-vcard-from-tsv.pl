@@ -2,7 +2,7 @@
 #
 # Jason Matthews
 # 19Jul2024
-# Kid tested, Mother approved
+# Kid tested. Mother approved
 
 
 use Text::vCard::Precisely;
