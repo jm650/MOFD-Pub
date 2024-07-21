@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
 #
 # Jason Matthews
 # 19Jul2024
@@ -8,13 +8,18 @@
 use Text::vCard::Precisely;
 use Getopt::Std;
 use File::Fetch;
+use File::stat;
 
 my $vcard = Text::vCard::Precisely->new();
 my $debug =0;
 my $junk;
 my %options=();
 my $targetfile="bogon-team-roster.tsv";
-
+my $reccount=0;
+my $master_vcard;
+my $faexp;
+my $cprexp;
+my $tsvrow;
 
 getopts('df:o:ihu:', \%options);
 
@@ -52,8 +57,9 @@ $junk=<$fh>;
 $junk=<$fh>;
 
 while ( my $row = readline($fh) ) {
+   $reccount++;
    ($tsvrow, $last,$first,$email,$cell,$home_phone,$address,$ham,$gmrs,$fema100,$fema200, 
-   $fema700,$fema800,$cprexp,$faexp,$cert,$bios,$backpacks,$part107)=split(/\t/,$row);
+   $fema700,$fema800,$cprexp,$faexp,$cert,$junk)=split(/\t/,$row);
 
 # Try to normalize data
    $address =~ s/,//g;
@@ -83,7 +89,6 @@ if ( $debug ) {
       type   =>['home'],
       street => $address,
       city   => $city,
-      region => "LaMOrinda",
       country => "United States of America"
       }
    );
@@ -106,5 +111,10 @@ if ( defined $options{o} ){
 	print $master $master_vcard;
 	close $master;
 }
+
+print STDERR "Created $reccount records.\n";
+
+
+
 
 

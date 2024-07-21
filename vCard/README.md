@@ -14,7 +14,7 @@ There are various command line arguments.<br>
 
 -f specify an input file in tsv format downloaded from Google sheets. Required for meaningful output.<br>
 -o specify an output file for a master record dump. One file, all records.<br>
--i create individual files for each record.<br>
+-i create individual files for each record. File names are First.Last.vcf<br>
 -u download the sheet from Google sheets. Rrequires URL as an argument.<br>
 -h this handy message about how to use command line arguments.<br>
 <br>
